@@ -6,15 +6,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import java.io.File;
-import java.util.Locale;
 
 public class MainActivity extends Activity {
     private static final int PICK_APK = 1001;
@@ -50,7 +46,6 @@ public class MainActivity extends Activity {
         b.setAllCaps(false);
         b.setTextSize(15);
         b.setBackgroundColor(Color.rgb(34,34,42));
-        b.setPadding(dp(12),0,dp(12),0);
         return b;
     }
 
@@ -66,8 +61,8 @@ public class MainActivity extends Activity {
         title.setGravity(Gravity.RIGHT);
         root.addView(title, new LinearLayout.LayoutParams(-1, dp(48)));
 
-        TextView sub = text("إدارة وتحليل ملفات APK", 14, Color.LTGRAY);
-        root.addView(sub, new LinearLayout.LayoutParams(-1, dp(32)));
+        root.addView(text("إدارة وتحليل ملفات APK", 14, Color.LTGRAY),
+                new LinearLayout.LayoutParams(-1, dp(32)));
 
         Button open = button("اختيار APK");
         root.addView(open, new LinearLayout.LayoutParams(-1, dp(54)));
@@ -84,15 +79,12 @@ public class MainActivity extends Activity {
 
         Button extract = button("استخراج");
         Button rebuild = button("إعادة بناء");
-        Button sign = button("توقيع");
         actions.addView(extract, new LinearLayout.LayoutParams(0, dp(54), 1));
         actions.addView(rebuild, new LinearLayout.LayoutParams(0, dp(54), 1));
-        actions.addView(sign, new LinearLayout.LayoutParams(0, dp(54), 1));
         root.addView(actions);
 
         extract.setOnClickListener(v -> runExtract());
         rebuild.setOnClickListener(v -> runRebuild());
-        sign.setOnClickListener(v -> Toast.makeText(this, "التوقيع يستخدم شهادة APK Studio المحلية عند توفر ملف مبني.", Toast.LENGTH_LONG).show());
 
         TextView filesTitle = text("محتويات APK", 18, Color.WHITE);
         filesTitle.setTypeface(Typeface.DEFAULT_BOLD);
@@ -107,7 +99,6 @@ public class MainActivity extends Activity {
 
         status = text("جاهز", 13, Color.GRAY);
         root.addView(status, new LinearLayout.LayoutParams(-1, dp(38)));
-
         setContentView(root);
     }
 
@@ -124,9 +115,7 @@ public class MainActivity extends Activity {
         try {
             currentApk = manager.copyToWorkspace(data.getData());
             inspect();
-        } catch (Exception e) {
-            showError(e);
-        }
+        } catch (Exception e) { showError(e); }
     }
 
     private void inspect() {
@@ -189,8 +178,10 @@ public class MainActivity extends Activity {
     }
 
     private void showError(Exception e) {
-        status.setText("خطأ: " + e.getMessage());
-        Toast.makeText(this, e.getMessage() == null ? "حدث خطأ" : e.getMessage(), Toast.LENGTH_LONG).show();
+        String m = e.getMessage() == null ? "حدث خطأ" : e.getMessage();
+        status.setText("خطأ: " + m);
+        Toast.makeText(this, m, Toast.LENGTH_LONG).show();
     }
+
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }
 }
