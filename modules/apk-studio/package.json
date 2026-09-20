@@ -1,0 +1,1 @@
+{"name":"apk-studio","version":"1.0.0","private":true,"main":"src/index.ts","devDependencies":{"expo":"*","expo-modules-core":"*"},"peerDependencies":{"expo":"*"},"peerDependenciesMeta":{"expo":{"optional":true}}}
