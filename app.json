@@ -1,0 +1,1 @@
+{"expo":{"name":"APK Studio","slug":"apk-studio","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"dark","android":{"package":"com.apkstudio.mobile","versionCode":1,"permissions":["REQUEST_INSTALL_PACKAGES"]},"plugins":["expo-document-picker"]}}
