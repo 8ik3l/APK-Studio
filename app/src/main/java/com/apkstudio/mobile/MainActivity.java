@@ -152,10 +152,10 @@ public class MainActivity extends Activity {
         status.setText("جاري الاستخراج...");
         new Thread(() -> {
             try {
-                File out = manager.decode(currentApk);
+                File out = manager.extract(currentApk);
                 runOnUiThread(() -> {
                     status.setText("تم الاستخراج: " + out.getAbsolutePath());
-                    toast("تم استخراج المشروع");
+                    toast("تم استخراج APK فعلياً");
                 });
             } catch (Exception e) { runOnUiThread(() -> showError(e)); }
         }).start();
@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
         status.setText("جاري إعادة البناء...");
         new Thread(() -> {
             try {
-                File project = manager.findDecodedProject(currentApk);
+                File project = manager.findExtractedProject(currentApk);
                 if (project == null) throw new Exception("استخرج APK أولاً، ثم أعد البناء.");
                 File out = manager.build(project);
                 runOnUiThread(() -> {
