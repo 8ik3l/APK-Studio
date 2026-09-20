@@ -1,0 +1,25 @@
+name: Build APK Studio Expo
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22.13.1, cache: npm}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - name: Install packages
+        run: npm install
+      - name: Generate Android project
+        run: npx expo prebuild --platform android --non-interactive
+      - name: Build release APK
+        working-directory: android
+        run: ./gradlew assembleRelease --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: APK-Studio-Expo-release
+          path: android/app/build/outputs/apk/release/app-release.apk
