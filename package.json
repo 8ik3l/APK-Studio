@@ -7,7 +7,7 @@
   "dependencies": {
     "expo": "^57.0.0",
     "expo-document-picker": "~57.0.2",
-    "expo-modules-core": "~57.0.4",
+    "expo-modules-core": "~57.0.18",
     "react": "19.2.3",
     "react-native": "0.86.0"
   }
