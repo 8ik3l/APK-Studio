@@ -1,11 +1,9 @@
 package com.apkstudio.mobile;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -76,13 +74,14 @@ public class ApkManager {
     public File build(File project) throws Exception {
         Config config = new Config("3.0.3");
         config.setForced(true);
-        File out = new File(project, "dist");
-        if (!out.exists()) out.mkdirs();
-        ApkBuilder builder = new ApkBuilder(project, config);
-        builder.build(out);
-        File[] apks = out.listFiles((d,n) -> n.toLowerCase(Locale.US).endsWith(".apk"));
-        if (apks == null || apks.length == 0) throw new Exception("Apktool لم ينتج APK. راجع حالة المشروع والموارد.");
-        return apks[0];
+        File out = new File(project, "dist/rebuilt.apk");
+        File parent = out.getParentFile();
+        if (parent != null && !parent.exists()) parent.mkdirs();
+        new ApkBuilder(project, config).build(out);
+        if (!out.isFile() || out.length() == 0) {
+            throw new Exception("Apktool لم ينتج APK. راجع حالة المشروع والموارد.");
+        }
+        return out;
     }
 
     private String baseName(File f) {
