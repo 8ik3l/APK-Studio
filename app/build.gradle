@@ -12,8 +12,3 @@ android {
         versionName '1.0'
     }
 }
-
-dependencies {
-    implementation 'org.apktool:apktool-lib:3.0.3'
-    implementation 'com.android.tools.build:apksig:2.3.0'
-}
