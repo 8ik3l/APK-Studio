@@ -1,0 +1,19 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.apkstudio.mobile'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.apkstudio.mobile'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+dependencies {
+    implementation 'org.apktool:apktool-lib:3.0.3'
+    implementation 'com.android.tools.build:apksig:2.3.0'
+}
